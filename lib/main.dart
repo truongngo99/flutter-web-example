@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_web_example/change_material_app.dart';
 import 'package:flutter_web_example/data/post/api.dart';
 import 'package:flutter_web_example/data/post/api_imple.dart';
+import 'package:flutter_web_example/data/route.dart';
 import 'package:flutter_web_example/view/home/home_view.dart';
 import 'package:teq_flutter_core/teq_flutter_core.dart';
 
@@ -34,11 +36,12 @@ class _MyAppState extends State<MyApp> {
         providers: [
           RepositoryProvider<Api>(create: (context) => ApiImpl()),
         ],
-        child: TeqCoreApp(
+        child: MaterialAppChange(
           debugShowCheckedModeBanner: false,
           height: double.infinity,
           width: double.infinity,
-          home: HomeView(),
+          initialRoute: '/',
+          routes: Routes().route,
         ));
   }
 }

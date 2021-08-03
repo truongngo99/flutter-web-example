@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_web_example/view/body/body_view.dart';
 import 'package:flutter_web_example/view/header/header_view.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_web_example/view/home/home_view.dart';
 
-class HomeView extends StatefulWidget {
-  HomeView({Key? key}) : super(key: key);
+class TraderView extends StatefulWidget {
+  TraderView({Key? key}) : super(key: key);
 
   @override
-  _HomeViewState createState() => _HomeViewState();
+  _TraderViewState createState() => _TraderViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _TraderViewState extends State<TraderView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,9 +26,10 @@ class _HomeViewState extends State<HomeView> {
               height: 20,
             ),
             Expanded(
-                child: BuildBody(
-              index: 0,
-            )),
+              child: BuildBody(
+                index: 1,
+              ),
+            ),
           ],
         ),
       ),

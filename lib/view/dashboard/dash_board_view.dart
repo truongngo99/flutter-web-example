@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_web_example/view/body/body_view.dart';
 import 'package:flutter_web_example/view/header/header_view.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_web_example/view/home/home_view.dart';
 
-class HomeView extends StatefulWidget {
-  HomeView({Key? key}) : super(key: key);
+class DashBoardView extends StatefulWidget {
+  DashBoardView({Key? key}) : super(key: key);
 
   @override
-  _HomeViewState createState() => _HomeViewState();
+  _DashBoardViewState createState() => _DashBoardViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _DashBoardViewState extends State<DashBoardView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
