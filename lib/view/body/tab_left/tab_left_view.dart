@@ -118,6 +118,7 @@ class _TabLeftState extends State<TabLeft> {
                       })),
               Divider(
                 height: 20,
+                thickness: 1,
               ),
               ListTile(
                 leading: Icon(

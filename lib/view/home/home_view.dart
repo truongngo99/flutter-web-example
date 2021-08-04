@@ -31,13 +31,13 @@ class _HomeViewState extends BaseBlocState<HomeView> {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        margin: EdgeInsets.symmetric(horizontal: 70, vertical: 60),
+        padding: EdgeInsets.only(top: 40, bottom: 20, left: 70, right: 70),
         child: Column(
           children: [
             BuildHeader(),
-            SizedBox(
-              height: 20,
-            ),
+            // SizedBox(
+            //   height: 10,
+            // ),
             Expanded(
                 child: BuildBody(
               index: 0,
