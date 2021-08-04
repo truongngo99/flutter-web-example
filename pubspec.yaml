@@ -33,7 +33,11 @@ dependencies:
   flutter_bloc: ^7.0.1
   syncfusion_flutter_charts: ^19.1.54
   google_fonts: ^2.1.0
+  syncfusion_flutter_calendar: ^19.2.51
+  table_calendar: ^3.0.1
   dio: ^4.0.0-prev3
+  flutter_calendar_carousel: ^2.0.2
+  intl: 
   teq_flutter_core:
     git:
       url: git@github.com:ExecutionLab/teq-flutter-core.git
