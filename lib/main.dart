@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_example/change_material_app.dart';
+import 'package:flutter_web_example/config/network.dart';
 import 'package:flutter_web_example/data/post/api.dart';
 import 'package:flutter_web_example/data/post/api_imple.dart';
 import 'package:flutter_web_example/data/route.dart';
@@ -27,6 +28,7 @@ class _MyAppState extends State<MyApp> {
     TeqNetwork.init(
       ApiUrl(),
       httpError: HttpError(),
+      interceptors: [HttpInterceptor()],
     );
   }
 
@@ -40,6 +42,7 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           height: double.infinity,
           width: double.infinity,
+          enableConfigView: true,
           initialRoute: '/',
           routes: Routes().route,
         ));

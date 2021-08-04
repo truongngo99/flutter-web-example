@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_web_example/data/post/api.dart';
 import 'package:flutter_web_example/view/body/body_view.dart';
+import 'package:flutter_web_example/view/dashboard/dash_board_bloc.dart';
+import 'package:flutter_web_example/view/dashboard/dash_board_event.dart';
+import 'package:flutter_web_example/view/dashboard/dash_board_state.dart';
 import 'package:flutter_web_example/view/header/header_view.dart';
 import 'package:flutter_web_example/view/home/home_view.dart';
+import 'package:teq_flutter_core/teq_flutter_core.dart';
 
 class DashBoardView extends StatefulWidget {
   DashBoardView({Key? key}) : super(key: key);
@@ -10,9 +16,15 @@ class DashBoardView extends StatefulWidget {
   _DashBoardViewState createState() => _DashBoardViewState();
 }
 
-class _DashBoardViewState extends State<DashBoardView> {
+class _DashBoardViewState extends BaseBlocState<DashBoardView> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => bloc as DashboardBloc),
+          ],
+          child: BaseBlocBuilder<DashboardState>(
+              bloc as DashboardBloc, _buildBody));
+  Widget _buildBody(BuildContext context, DashboardState state) {
     return Scaffold(
       backgroundColor: Color(0xffeaf2ff),
       body: Container(
@@ -34,4 +46,7 @@ class _DashBoardViewState extends State<DashBoardView> {
       ),
     );
   }
+
+  @override
+  BaseBloc createBloc() => DashboardBloc(context.read<Api>());
 }
