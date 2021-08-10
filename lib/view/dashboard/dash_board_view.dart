@@ -33,7 +33,7 @@ class _DashBoardViewState extends BaseBlocState<DashBoardView> {
         margin: EdgeInsets.symmetric(horizontal: 70, vertical: 60),
         child: Column(
           children: [
-            BuildHeader(),
+            Expanded(child: BuildHeader()),
             SizedBox(
               height: 20,
             ),

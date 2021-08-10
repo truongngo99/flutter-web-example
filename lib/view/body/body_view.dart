@@ -15,19 +15,22 @@ class BuildBody extends StatefulWidget {
 class _BuildBodyState extends State<BuildBody> {
   @override
   Widget build(BuildContext context) {
+    Size _size = MediaQuery.of(context).size;
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Expanded(
-              flex: 2,
+              flex: _size.width > 948 ? 2 : 4,
               child: TabLeft(
                 index: widget.index,
               )),
           SizedBox(
             width: 10,
           ),
-          Expanded(flex: 6, child: listWidget.elementAt(widget.index ?? 0)),
+          Expanded(
+              flex: _size.width > 948 ? 6 : 10,
+              child: listWidget.elementAt(widget.index ?? 0)),
         ],
       ),
     );

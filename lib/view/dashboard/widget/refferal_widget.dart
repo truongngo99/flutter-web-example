@@ -49,7 +49,9 @@ class _BuildRefferalState extends BaseBlocState<BuildRefferal> {
                     )
                   ],
                 ),
-                Divider(),
+                Divider(
+                  thickness: 1,
+                ),
                 Expanded(
                   child: Stack(
                     children: [

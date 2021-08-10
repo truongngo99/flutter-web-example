@@ -48,70 +48,80 @@ class _SaleStatictisWidgetState extends State<SaleStatictisWidget> {
               )
             ],
           ),
-          Divider(),
+          Divider(
+            thickness: 1,
+          ),
           Row(
             children: [
-              Container(
-                height: 30,
-                width: 70,
-                margin: EdgeInsets.only(right: 20),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Color(0xff52575d),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Text(
-                  'All Time',
-                  style: GoogleFonts.rajdhani(
-                    color: Colors.white,
+              Expanded(
+                child: Container(
+                  height: 30,
+                  width: 70,
+                  margin: EdgeInsets.only(right: 20),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Color(0xff52575d),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Text(
+                    'All Time',
+                    style: GoogleFonts.rajdhani(
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
-              Container(
-                height: 30,
-                width: 70,
-                margin: EdgeInsets.only(right: 20),
-                alignment: Alignment.center,
-                // decoration: BoxDecoration(
-                //   color: Color(0xff52575d),
-                //   borderRadius: BorderRadius.circular(5),
-                // ),
-                child: Text(
-                  'This year',
-                  style: GoogleFonts.rajdhani(
-                    color: Color(0xffc5c8cc),
+              Expanded(
+                child: Container(
+                  height: 30,
+                  width: 70,
+                  margin: EdgeInsets.only(right: 20),
+                  alignment: Alignment.center,
+                  // decoration: BoxDecoration(
+                  //   color: Color(0xff52575d),
+                  //   borderRadius: BorderRadius.circular(5),
+                  // ),
+                  child: Text(
+                    'This year',
+                    style: GoogleFonts.rajdhani(
+                      color: Color(0xffc5c8cc),
+                    ),
                   ),
                 ),
               ),
-              Container(
-                height: 30,
-                width: 70,
-                margin: EdgeInsets.only(right: 20),
-                alignment: Alignment.center,
-                // decoration: BoxDecoration(
-                //   color: Color(0xff52575d),
-                //   borderRadius: BorderRadius.circular(5),
-                // ),
-                child: Text(
-                  'This week',
-                  style: GoogleFonts.rajdhani(
-                    color: Color(0xffc5c8cc),
+              Expanded(
+                child: Container(
+                  height: 30,
+                  width: 70,
+                  margin: EdgeInsets.only(right: 20),
+                  alignment: Alignment.center,
+                  // decoration: BoxDecoration(
+                  //   color: Color(0xff52575d),
+                  //   borderRadius: BorderRadius.circular(5),
+                  // ),
+                  child: Text(
+                    'This week',
+                    style: GoogleFonts.rajdhani(
+                      color: Color(0xffc5c8cc),
+                    ),
                   ),
                 ),
               ),
-              Container(
-                height: 30,
-                width: 70,
-                margin: EdgeInsets.only(right: 20),
-                alignment: Alignment.center,
-                // decoration: BoxDecoration(
-                //   color: Color(0xff52575d),
-                //   borderRadius: BorderRadius.circular(5),
-                // ),
-                child: Text(
-                  'Today',
-                  style: GoogleFonts.rajdhani(
-                    color: Color(0xffc5c8cc),
+              Expanded(
+                child: Container(
+                  height: 30,
+                  width: 70,
+                  margin: EdgeInsets.only(right: 20),
+                  alignment: Alignment.center,
+                  // decoration: BoxDecoration(
+                  //   color: Color(0xff52575d),
+                  //   borderRadius: BorderRadius.circular(5),
+                  // ),
+                  child: Text(
+                    'Today',
+                    style: GoogleFonts.rajdhani(
+                      color: Color(0xffc5c8cc),
+                    ),
                   ),
                 ),
               ),

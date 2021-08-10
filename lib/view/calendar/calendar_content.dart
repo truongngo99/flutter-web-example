@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_web_example/main.dart';
 
 import 'package:flutter_web_example/view/dashboard/widget/sales_statistics_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,7 +17,11 @@ class CalendarContent extends StatefulWidget {
 
 class _CalendarContentState extends State<CalendarContent> {
   var monthCurrent = DateTime.now().month;
-  var focusedDay = DateTime.now();
+  CalendarController _controller = CalendarController();
+
+  CalendarFormat format = CalendarFormat.month;
+  DateTime selectedDay = DateTime.now();
+  DateTime focusedDay = DateTime.now();
   List<String> listMonth = [
     'Jan',
     'Feb',
@@ -31,19 +36,30 @@ class _CalendarContentState extends State<CalendarContent> {
     'Now',
     'Dec'
   ];
-
-  covertToMonth(int intDate) {
-    String strDate = intDate.toString();
-    DateTime dateTimedate = DateFormat("yyyy-MM-dd hh:mm:ss").parse(strDate);
-    String date = DateFormat.MMMM().format(dateTimedate);
-    return date;
-  }
+  List<String> listDate = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
   @override
   Widget build(BuildContext context) {
-    var now = new DateTime.now();
-    var current_mon = now.month;
-    // print(listMonth[current_mon - 2]);
+    List<Meeting> _getDataSource() {
+      final List<Meeting> meetings = <Meeting>[];
+      final DateTime today = DateTime.now();
+      final DateTime startTime =
+          DateTime(today.year, today.month, today.day, 9, 0, 0);
+      final DateTime endTime = startTime.add(const Duration(hours: 2));
+      meetings.add(Meeting(
+          'Conference', startTime, endTime, const Color(0xFF0F8644), false));
+      meetings.add(
+          Meeting('Hello', startTime, endTime, const Color(0xFF0F8644), false));
+      meetings.add(Meeting(
+          'Ngay mai',
+          DateTime(today.year, today.month, today.day - 1, 9, 0, 0),
+          DateTime(today.year, today.month, today.day + 1, 9, 0, 0),
+          Color(0xFF0F8644),
+          false));
+
+      return meetings;
+    }
+
     return Container(
       height: MediaQuery.of(context).size.height - 200,
       width: MediaQuery.of(context).size.width,
@@ -72,50 +88,73 @@ class _CalendarContentState extends State<CalendarContent> {
               ),
               Divider(),
               Expanded(
-                child: TableCalendar(
-                  headerStyle: HeaderStyle(
-                    titleCentered: true,
-                    formatButtonVisible: false,
-                    leftChevronIcon: Container(
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.chevron_left,
-                            color: Colors.blue,
-                          ),
-                          Text(
-                            listMonth[monthCurrent - 2],
-                            style: GoogleFonts.rajdhani(),
-                          )
-                        ],
+                child: SfCalendar(
+                  view: CalendarView.month,
+                  firstDayOfWeek: 1,
+                  dataSource: MeetingDataSource(_getDataSource()),
+                  cellEndPadding: 5,
+                  headerStyle: CalendarHeaderStyle(
+                      textAlign: TextAlign.center,
+                      textStyle: GoogleFonts.rajdhani(
+                          fontWeight: FontWeight.bold, fontSize: 25)),
+                  showNavigationArrow: true,
+                  initialDisplayDate: DateTime.now(),
+                  // viewHeaderStyle: ViewHeaderStyle(
+                  //     backgroundColor: Colors.white,
+                  //     dayTextStyle: TextStyle(color: Colors.transparent),
+                  //     dateTextStyle: TextStyle(color: Colors.transparent)),
+                  monthCellBuilder:
+                      (BuildContext buildContext, MonthCellDetails details) {
+                    return Container(
+                      margin: EdgeInsets.fromLTRB(3, 3, 3, 3),
+                      padding: EdgeInsets.fromLTRB(5, 1, 3, 3),
+                      decoration: BoxDecoration(
+                        color: Color(0xffebf2f7),
+
+                        borderRadius: BorderRadius.circular(8),
+                        // border:
+                        //     Border.all(color: defaultColor, width: 0.5)
                       ),
-                    ),
-                    rightChevronIcon: Container(
-                      child: Row(
-                        children: [
-                          Text(
-                            listMonth[monthCurrent],
-                            style: GoogleFonts.rajdhani(),
-                          ),
-                          Icon(
-                            Icons.chevron_right,
-                            color: Colors.blue,
-                          ),
-                        ],
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Column(
+                          children: [
+                            Text(
+                              listDate[details.date.weekday - 1],
+                              style: TextStyle(
+                                color: Color(0xffd6dde2),
+                                fontSize: 10,
+                              ),
+                            ),
+                            Text(
+                              details.date.day.toString(),
+                              style: TextStyle(
+                                color: Color(0xff74797f),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    titleTextStyle: GoogleFonts.rajdhani(
-                        fontWeight: FontWeight.bold, fontSize: 22),
-                  ),
-                  firstDay: DateTime.utc(2010, 10, 16),
-                  lastDay: DateTime.utc(2030, 3, 14),
-                  focusedDay: focusedDay,
-                  onPageChanged: (date) {
-                    setState(() {
-                      monthCurrent = date.month;
-                      focusedDay = date;
-                    });
+                    );
                   },
+
+                  monthViewSettings: MonthViewSettings(
+                    appointmentDisplayMode:
+                        MonthAppointmentDisplayMode.appointment,
+                    agendaItemHeight: 50,
+                    appointmentDisplayCount: 5,
+                    showTrailingAndLeadingDates: true,
+                  ),
+
+                  selectionDecoration: BoxDecoration(
+                    border: Border.all(
+                        color: const Color.fromARGB(255, 68, 140, 255),
+                        width: 2),
+                    borderRadius: BorderRadius.circular(8),
+                    shape: BoxShape.rectangle,
+                  ),
+                  // appointmentBuilder: appointmentBuilder,
+                  // showDatePickerButton: true,
                 ),
               ),
             ],
@@ -124,4 +163,78 @@ class _CalendarContentState extends State<CalendarContent> {
       ),
     );
   }
+
+  Widget appointmentBuilder(BuildContext context,
+      CalendarAppointmentDetails calendarAppointmentDetails) {
+    final Appointment appointment =
+        calendarAppointmentDetails.appointments.first;
+    return Column(
+      children: [
+        Container(
+            width: calendarAppointmentDetails.bounds.width,
+            height: calendarAppointmentDetails.bounds.height / 2,
+            color: appointment.color,
+            child: Center(
+              child: Icon(
+                Icons.group,
+                color: Colors.black,
+              ),
+            )),
+        Container(
+          width: calendarAppointmentDetails.bounds.width,
+          height: calendarAppointmentDetails.bounds.height / 2,
+          color: appointment.color,
+          child: Text(
+            appointment.subject +
+                DateFormat(' (hh:mm a').format(appointment.startTime) +
+                '-' +
+                DateFormat('hh:mm a)').format(appointment.endTime),
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 10),
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class MeetingDataSource extends CalendarDataSource {
+  MeetingDataSource(List<Meeting> source) {
+    appointments = source;
+  }
+
+  @override
+  DateTime getStartTime(int index) {
+    return appointments![index].from;
+  }
+
+  @override
+  DateTime getEndTime(int index) {
+    return appointments![index].to;
+  }
+
+  @override
+  String getSubject(int index) {
+    return appointments![index].eventName;
+  }
+
+  @override
+  Color getColor(int index) {
+    return appointments![index].background;
+  }
+
+  @override
+  bool isAllDay(int index) {
+    return appointments![index].isAllDay;
+  }
+}
+
+class Meeting {
+  Meeting(this.eventName, this.from, this.to, this.background, this.isAllDay);
+
+  String eventName;
+  DateTime from;
+  DateTime to;
+  Color background;
+  bool isAllDay;
 }

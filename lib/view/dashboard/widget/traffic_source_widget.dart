@@ -39,7 +39,9 @@ class _BuildTrafficSourceState extends State<BuildTrafficSource> {
               )
             ],
           ),
-          Divider(),
+          Divider(
+            thickness: 1,
+          ),
           Expanded(
             child: SfCircularChart(
               annotations: <CircularChartAnnotation>[
