@@ -78,13 +78,24 @@ class _InvolvementWidgetState extends State<InvolvementWidget> {
         ),
         Expanded(
           child: SfCartesianChart(
+            tooltipBehavior: TooltipBehavior(
+              enable: true,
+              activationMode: ActivationMode.doubleTap,
+              tooltipPosition: TooltipPosition.pointer,
+            ),
+            trackballBehavior: TrackballBehavior(
+              lineType: TrackballLineType.vertical,
+              activationMode: ActivationMode.singleTap,
+              shouldAlwaysShow: false,
+              enable: true,
+            ),
             series: <ChartSeries>[
               SplineAreaSeries<SalesData, int>(
                 dataSource: chartData,
                 xValueMapper: (SalesData sales, _) => sales.year,
                 yValueMapper: (SalesData sales, _) => sales.sales,
                 borderColor: const Color(0xffdce9fd),
-                color: const Color(0xffeef4fe),
+                color: Color(0xffeef4fe),
                 borderWidth: 3,
               ),
               SplineAreaSeries<SalesData, int>(

@@ -30,88 +30,181 @@ class _DashBoardContentState extends BaseBlocState<DashBoardContent> {
           child: BaseBlocBuilder<DashboardState>(
               bloc as DashboardBloc, _buildBody));
   Widget _buildBody(BuildContext context, DashboardState state) {
+    Size _size = MediaQuery.of(context).size;
     return Container(
       height: MediaQuery.of(context).size.height - 200,
       width: MediaQuery.of(context).size.width,
-      child: Column(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Container(
-              child: Row(
-                children: [
-                  Container(
-                    height: double.infinity,
-                    width: MediaQuery.of(context).size.width - 808,
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      child: SaleStatictisWidget(),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                    height: double.infinity,
-                    width: 300,
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      child: BuildRefferal(),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Expanded(
-              flex: 1,
-              child: Container(
-                width: MediaQuery.of(context).size.width - 500,
-                child: Row(
-                  children: [
-                    Container(
+      child: _size.width < 823 && _size.width < 1039
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                    flex: 1,
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.8,
                       height: double.infinity,
-                      width: MediaQuery.of(context).size.width * 0.22,
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        child: BuildTraffic(),
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          Container(
+                            height: double.infinity,
+                            width: MediaQuery.of(context).size.width * 0.475,
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: SaleStatictisWidget(),
+                            ),
+                          ),
+                          Container(
+                            height: double.infinity,
+                            width: 300,
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Expanded(child: BuildRefferal()),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: Container(
+                    )),
+                SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                    flex: 1,
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      height: double.infinity,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          Container(
+                            height: double.infinity,
+                            width: 300,
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: BuildTraffic(),
+                            ),
+                          ),
+                          Container(
+                              height: double.infinity,
+                              width: 300,
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: InvolvementWidget(),
+                              )),
+                          Container(
+                              height: double.infinity,
+                              width: 300,
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Expanded(child: BuildTrafficSource()),
+                              )),
+                        ],
+                      ),
+                    ))
+              ],
+            )
+          : Column(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    child: Row(
+                      children: [
+                        Container(
                           height: double.infinity,
-                          width: MediaQuery.of(context).size.width * 0.22,
+                          width: MediaQuery.of(context).size.width * 0.475,
                           child: Card(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)),
-                            child: InvolvementWidget(),
-                          )),
+                            child: SaleStatictisWidget(),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: double.infinity,
+                            width: MediaQuery.of(context).size.width * 0.19,
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Expanded(child: BuildRefferal()),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Container(
-                        height: double.infinity,
-                        width: 300,
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          child: BuildTrafficSource(),
-                        )),
-                  ],
+                  ),
                 ),
-              )),
-        ],
-      ),
+                SizedBox(
+                  height: 10,
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            height: double.infinity,
+                            width: MediaQuery.of(context).size.width - 808,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    height: double.infinity,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.22,
+                                    child: Card(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: BuildTraffic(),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                  child: Container(
+                                      height: double.infinity,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.247,
+                                      child: Card(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: InvolvementWidget(),
+                                      )),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Container(
+                            height: double.infinity,
+                            width: 300,
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Expanded(child: BuildTrafficSource()),
+                            )),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
     );
   }
 

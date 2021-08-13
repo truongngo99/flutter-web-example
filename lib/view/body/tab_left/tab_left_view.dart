@@ -18,7 +18,7 @@ class _TabLeftState extends State<TabLeft> {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height - 200,
-      width: 500,
+      width: MediaQuery.of(context).size.width * 0.3,
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -47,9 +47,13 @@ class _TabLeftState extends State<TabLeft> {
                           SizedBox(
                             width: 5,
                           ),
-                          Text('Miroslav Minev',
-                              style: GoogleFonts.rajdhani(
-                                  fontWeight: FontWeight.bold))
+                          Container(
+                            // width: MediaQuery.of(context).size.width * 0.12,
+
+                            child: Text('Miroslav Minev',
+                                style: GoogleFonts.rajdhani(
+                                    fontWeight: FontWeight.bold)),
+                          ),
                         ],
                       ),
                     ),
@@ -114,6 +118,20 @@ class _TabLeftState extends State<TabLeft> {
                                   Navigator.pushNamed(
                                       context, slider.data[index]['route']);
                                 },
+                                trailing: slider.data[index]['name'] ==
+                                        'Messages'
+                                    ? Container(
+                                        height: 20,
+                                        width: 20,
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.black),
+                                        child: Text(
+                                          '6',
+                                          style: TextStyle(color: Colors.white),
+                                        ))
+                                    : null,
                               );
                       })),
               Divider(

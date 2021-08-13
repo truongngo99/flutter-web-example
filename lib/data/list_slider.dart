@@ -9,7 +9,7 @@ class ListSlider {
     {
       'icon': FontAwesomeIcons.inbox,
       'name': 'File manager',
-      'route': 'tradeview'
+      'route': 'calendar'
     },
     {
       'icon': FontAwesomeIcons.chartPie,
@@ -24,7 +24,7 @@ class ListSlider {
     {
       'icon': FontAwesomeIcons.calendarAlt,
       'name': 'Calendar',
-      'route': 'tradeview'
+      'route': 'calendar'
     },
     {
       'icon': FontAwesomeIcons.comments,

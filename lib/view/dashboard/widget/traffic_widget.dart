@@ -32,7 +32,9 @@ class _BuildTrafficState extends State<BuildTraffic> {
               )
             ],
           ),
-          Divider(),
+          Divider(
+            thickness: 1,
+          ),
           Expanded(
             child: ListView(
               children: [
