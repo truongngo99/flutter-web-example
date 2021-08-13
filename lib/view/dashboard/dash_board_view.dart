@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_example/data/post/api.dart';
 import 'package:flutter_web_example/view/body/body_view.dart';
+import 'package:flutter_web_example/view/body/tab_left/tab_left_view.dart';
 import 'package:flutter_web_example/view/dashboard/dash_board_bloc.dart';
 import 'package:flutter_web_example/view/dashboard/dash_board_event.dart';
 import 'package:flutter_web_example/view/dashboard/dash_board_state.dart';
@@ -27,15 +28,21 @@ class _DashBoardViewState extends BaseBlocState<DashBoardView> {
   Widget _buildBody(BuildContext context, DashboardState state) {
     return Scaffold(
       backgroundColor: Color(0xffeaf2ff),
+      drawer: ConstrainedBox(
+        constraints: BoxConstraints(minWidth: 230, maxWidth: 300),
+        child: TabLeft(
+          index: 0,
+        ),
+      ),
       body: Container(
         height: double.infinity,
         width: double.infinity,
         margin: EdgeInsets.symmetric(horizontal: 70, vertical: 60),
         child: Column(
           children: [
-            Expanded(child: BuildHeader()),
+            BuildHeader(),
             SizedBox(
-              height: 20,
+              height: 10,
             ),
             Expanded(
                 child: BuildBody(

@@ -18,7 +18,7 @@ class _TabLeftState extends State<TabLeft> {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height - 200,
-      width: 500,
+      width: MediaQuery.of(context).size.width * 0.3,
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -48,7 +48,8 @@ class _TabLeftState extends State<TabLeft> {
                             width: 5,
                           ),
                           Container(
-                            width: 210,
+                            // width: MediaQuery.of(context).size.width * 0.12,
+
                             child: Text('Miroslav Minev',
                                 style: GoogleFonts.rajdhani(
                                     fontWeight: FontWeight.bold)),

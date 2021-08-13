@@ -129,6 +129,17 @@ class _SaleStatictisWidgetState extends State<SaleStatictisWidget> {
           ),
           Expanded(
             child: SfCartesianChart(
+              tooltipBehavior: TooltipBehavior(
+                enable: true,
+                activationMode: ActivationMode.doubleTap,
+                tooltipPosition: TooltipPosition.pointer,
+              ),
+              trackballBehavior: TrackballBehavior(
+                lineType: TrackballLineType.vertical,
+                activationMode: ActivationMode.singleTap,
+                shouldAlwaysShow: false,
+                enable: true,
+              ),
               series: <ChartSeries>[
                 SplineSeries<SalesData, int>(
                   dataSource: chartData,

@@ -17,22 +17,26 @@ class _BuildBodyState extends State<BuildBody> {
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
     return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Expanded(
-              flex: _size.width > 948 ? 2 : 4,
-              child: TabLeft(
-                index: widget.index,
-              )),
-          SizedBox(
-            width: 10,
-          ),
-          Expanded(
-              flex: _size.width > 948 ? 6 : 10,
-              child: listWidget.elementAt(widget.index ?? 0)),
-        ],
-      ),
+      child: _size.width < 1036
+          ? Container(
+              //flex: _size.width > 948 ? 6 : 10,
+              child: listWidget.elementAt(widget.index ?? 0))
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                    flex: _size.width > 948 ? 2 : 4,
+                    child: TabLeft(
+                      index: widget.index,
+                    )),
+                SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                    flex: _size.width > 948 ? 6 : 10,
+                    child: listWidget.elementAt(widget.index ?? 0)),
+              ],
+            ),
     );
   }
 }

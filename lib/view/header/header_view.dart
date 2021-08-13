@@ -13,95 +13,202 @@ class _BuildHeaderState extends State<BuildHeader> {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    Size _size = MediaQuery.of(context).size;
     return Container(
       height: height * 0.05,
       width: width,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            height: height * 0.048,
-            width: width * 0.05,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: Color(0xff508ff4),
-              borderRadius: BorderRadius.circular(13),
-            ),
-            child: Text(
-              'Miro',
-              textAlign: TextAlign.center,
-              style: GoogleFonts.rajdhani(
-                fontSize: 28,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          Container(
-            child: Row(
+      child: width < 1039
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color(0xffffffff),
-                  ),
-                  child: IconButton(
-                      onPressed: () {},
+                    child: Row(
+                  children: [
+                    IconButton(
                       icon: Icon(
-                        Icons.search,
-                        color: Color(0xffd4dde7),
-                      )),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color(0xffffffff),
-                  ),
-                  child: Stack(
-                    children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.notifications_none,
-                          color: Colors.black,
+                        Icons.menu,
+                        color: Colors.blue,
+                      ),
+                      onPressed: () {
+                        Scaffold.of(context).openDrawer();
+                      },
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Container(
+                      height: height * 0.048,
+                      width: width * 0.05,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: Color(0xff508ff4),
+                        borderRadius: BorderRadius.circular(13),
+                      ),
+                      child: Text(
+                        'Miro',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.rajdhani(
+                          fontSize: width * 0.023,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Positioned(
-                        top: 13,
-                        left: 11,
-                        child: Container(
-                          height: 8,
-                          width: 8,
-                          decoration: BoxDecoration(
-                              color: Colors.green, shape: BoxShape.circle),
+                    ),
+                  ],
+                )),
+                Container(
+                  child: Row(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(0xffffffff),
                         ),
-                      )
+                        child: IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.search,
+                              color: Color(0xffd4dde7),
+                            )),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(0xffffffff),
+                        ),
+                        child: Stack(
+                          children: [
+                            IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.notifications_none,
+                                color: Colors.black,
+                              ),
+                            ),
+                            Positioned(
+                              top: 13,
+                              left: 11,
+                              child: Container(
+                                height: 8,
+                                width: 8,
+                                decoration: BoxDecoration(
+                                    color: Colors.green,
+                                    shape: BoxShape.circle),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(0xffffffff),
+                        ),
+                        child: IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.person_outline,
+                              color: Color(0xffd4dde7),
+                            )),
+                      ),
                     ],
                   ),
                 ),
-                SizedBox(
-                  width: 10,
+              ],
+            )
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  height: height * 0.048,
+                  width: width * 0.05,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Color(0xff508ff4),
+                    borderRadius: BorderRadius.circular(13),
+                  ),
+                  child: Text(
+                    'Miro',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.rajdhani(
+                      fontSize: 28,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
                 Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color(0xffffffff),
+                  child: Row(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(0xffffffff),
+                        ),
+                        child: IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.search,
+                              color: Color(0xffd4dde7),
+                            )),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(0xffffffff),
+                        ),
+                        child: Stack(
+                          children: [
+                            IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.notifications_none,
+                                color: Colors.black,
+                              ),
+                            ),
+                            Positioned(
+                              top: 13,
+                              left: 11,
+                              child: Container(
+                                height: 8,
+                                width: 8,
+                                decoration: BoxDecoration(
+                                    color: Colors.green,
+                                    shape: BoxShape.circle),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(0xffffffff),
+                        ),
+                        child: IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.person_outline,
+                              color: Color(0xffd4dde7),
+                            )),
+                      ),
+                    ],
                   ),
-                  child: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.person_outline,
-                        color: Color(0xffd4dde7),
-                      )),
                 ),
               ],
             ),
-          ),
-        ],
-      ),
     );
   }
 }

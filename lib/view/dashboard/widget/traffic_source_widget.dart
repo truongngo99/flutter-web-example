@@ -18,6 +18,7 @@ class _BuildTrafficSourceState extends State<BuildTrafficSource> {
       ChartData('Jack', 34, Color.fromRGBO(228, 0, 124, 1)),
       ChartData('Others', 52, Color.fromRGBO(255, 189, 57, 1))
     ];
+    print(MediaQuery.of(context).size.height * 0.23);
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
       child: Column(
@@ -44,6 +45,11 @@ class _BuildTrafficSourceState extends State<BuildTrafficSource> {
           ),
           Expanded(
             child: SfCircularChart(
+              tooltipBehavior: TooltipBehavior(
+                enable: true,
+                activationMode: ActivationMode.doubleTap,
+                tooltipPosition: TooltipPosition.pointer,
+              ),
               annotations: <CircularChartAnnotation>[
                 CircularChartAnnotation(
                     widget: Container(
@@ -55,8 +61,8 @@ class _BuildTrafficSourceState extends State<BuildTrafficSource> {
                             color: const Color.fromRGBO(230, 230, 230, 1)))),
                 CircularChartAnnotation(
                     widget: Container(
-                        height: 155,
-                        width: 155,
+                        height: MediaQuery.of(context).size.height * 0.183,
+                        width: MediaQuery.of(context).size.height * 0.183,
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
@@ -90,15 +96,15 @@ class _BuildTrafficSourceState extends State<BuildTrafficSource> {
                     xValueMapper: (ChartData data, _) => data.x,
                     yValueMapper: (ChartData data, _) => data.y,
                     pointColorMapper: (ChartData data, _) => data.color,
-                    radius: '100',
+                    radius: '90%',
                     // startAngle: 4,
                     // endAngle: 2,
                     strokeColor: Colors.white,
                     strokeWidth: 1.5,
-                    explodeOffset: '3%',
+                    explodeOffset: '80%',
 
                     // strokeWidth: 10,
-                    innerRadius: '85')
+                    innerRadius: '85%')
               ],
             ),
           )

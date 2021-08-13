@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_web_example/data/model/meeting_model.dart';
 import 'package:flutter_web_example/main.dart';
+import 'package:flutter_web_example/ultis.dart';
+import 'package:flutter_web_example/view/calendar/calendar_picker.dart';
+import 'package:flutter_web_example/view/calendar/meeting_datasource.dart';
 
 import 'package:flutter_web_example/view/dashboard/widget/sales_statistics_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,6 +26,9 @@ class _CalendarContentState extends State<CalendarContent> {
   CalendarFormat format = CalendarFormat.month;
   DateTime selectedDay = DateTime.now();
   DateTime focusedDay = DateTime.now();
+  TextEditingController _titleController = TextEditingController();
+  TextEditingController _locationController = TextEditingController();
+  TextEditingController _decriptionController = TextEditingController();
   List<String> listMonth = [
     'Jan',
     'Feb',
@@ -37,29 +44,36 @@ class _CalendarContentState extends State<CalendarContent> {
     'Dec'
   ];
   List<String> listDate = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  List<Meeting> meetings = <Meeting>[];
+  DateTime? fromDate;
+  DateTime? toDate;
+
+  setDate() {
+    setState(() {
+      _dataSource = _getCalendarDataSource();
+    });
+  }
 
   @override
+  void initState() {
+    _dataSource = _getCalendarDataSource();
+
+    fromDate = DateTime.now();
+    print(fromDate);
+    toDate = DateTime.now().add(Duration(hours: 2));
+    super.initState();
+  }
+
+  var _dataSource;
+  MeetingDataSource _getCalendarDataSource() {
+    // meetings.add(Meeting('Meeting', DateTime(2021, 08, 12),
+    //     DateTime(2021, 08, 13), Colors.blue, false));
+    return MeetingDataSource(meetings);
+  }
+
+  bool _openSchedule = false;
+  @override
   Widget build(BuildContext context) {
-    List<Meeting> _getDataSource() {
-      final List<Meeting> meetings = <Meeting>[];
-      final DateTime today = DateTime.now();
-      final DateTime startTime =
-          DateTime(today.year, today.month, today.day, 9, 0, 0);
-      final DateTime endTime = startTime.add(const Duration(hours: 2));
-      meetings.add(Meeting(
-          'Conference', startTime, endTime, const Color(0xFF0F8644), false));
-      meetings.add(
-          Meeting('Hello', startTime, endTime, const Color(0xFF0F8644), false));
-      meetings.add(Meeting(
-          'Ngay mai',
-          DateTime(today.year, today.month, today.day - 1, 9, 0, 0),
-          DateTime(today.year, today.month, today.day + 1, 9, 0, 0),
-          Color(0xFF0F8644),
-          false));
-
-      return meetings;
-    }
-
     return Container(
       height: MediaQuery.of(context).size.height - 200,
       width: MediaQuery.of(context).size.width,
@@ -91,7 +105,8 @@ class _CalendarContentState extends State<CalendarContent> {
                 child: SfCalendar(
                   view: CalendarView.month,
                   firstDayOfWeek: 1,
-                  dataSource: MeetingDataSource(_getDataSource()),
+                  controller: _controller,
+                  dataSource: _dataSource,
                   cellEndPadding: 5,
                   headerStyle: CalendarHeaderStyle(
                       textAlign: TextAlign.center,
@@ -99,10 +114,7 @@ class _CalendarContentState extends State<CalendarContent> {
                           fontWeight: FontWeight.bold, fontSize: 25)),
                   showNavigationArrow: true,
                   initialDisplayDate: DateTime.now(),
-                  // viewHeaderStyle: ViewHeaderStyle(
-                  //     backgroundColor: Colors.white,
-                  //     dayTextStyle: TextStyle(color: Colors.transparent),
-                  //     dateTextStyle: TextStyle(color: Colors.transparent)),
+
                   monthCellBuilder:
                       (BuildContext buildContext, MonthCellDetails details) {
                     return Container(
@@ -110,10 +122,7 @@ class _CalendarContentState extends State<CalendarContent> {
                       padding: EdgeInsets.fromLTRB(5, 1, 3, 3),
                       decoration: BoxDecoration(
                         color: Color(0xffebf2f7),
-
                         borderRadius: BorderRadius.circular(8),
-                        // border:
-                        //     Border.all(color: defaultColor, width: 0.5)
                       ),
                       child: Align(
                         alignment: Alignment.topLeft,
@@ -129,6 +138,7 @@ class _CalendarContentState extends State<CalendarContent> {
                             Text(
                               details.date.day.toString(),
                               style: TextStyle(
+                                fontSize: 13,
                                 color: Color(0xff74797f),
                               ),
                             ),
@@ -137,14 +147,41 @@ class _CalendarContentState extends State<CalendarContent> {
                       ),
                     );
                   },
+                  onLongPress: (_) async {
+                    var data = await showDialog<Meeting>(
+                      context: context,
+
+                      barrierDismissible: false, // user must tap button!
+                      builder: (BuildContext context) {
+                        return CalendarPicker();
+                      },
+                    );
+                    meetings.add(data!);
+                    setState(() {
+                      _dataSource = _getCalendarDataSource();
+                    });
+                  },
+                  onTap: (_) {
+                    setState(() {
+                      _openSchedule = true;
+                    });
+                  },
+                  scheduleViewSettings: ScheduleViewSettings(
+                      appointmentItemHeight: 60,
+                      weekHeaderSettings: WeekHeaderSettings(
+                        height: 40,
+                        textAlign: TextAlign.center,
+                      )),
 
                   monthViewSettings: MonthViewSettings(
-                    appointmentDisplayMode:
-                        MonthAppointmentDisplayMode.appointment,
-                    agendaItemHeight: 50,
-                    appointmentDisplayCount: 5,
-                    showTrailingAndLeadingDates: true,
-                  ),
+                      appointmentDisplayMode:
+                          MonthAppointmentDisplayMode.appointment,
+                      agendaItemHeight: 50,
+                      appointmentDisplayCount: 5,
+                      showAgenda: _openSchedule,
+                      monthCellStyle: MonthCellStyle()
+                      //showTrailingAndLeadingDates: true,
+                      ),
 
                   selectionDecoration: BoxDecoration(
                     border: Border.all(
@@ -163,78 +200,4 @@ class _CalendarContentState extends State<CalendarContent> {
       ),
     );
   }
-
-  Widget appointmentBuilder(BuildContext context,
-      CalendarAppointmentDetails calendarAppointmentDetails) {
-    final Appointment appointment =
-        calendarAppointmentDetails.appointments.first;
-    return Column(
-      children: [
-        Container(
-            width: calendarAppointmentDetails.bounds.width,
-            height: calendarAppointmentDetails.bounds.height / 2,
-            color: appointment.color,
-            child: Center(
-              child: Icon(
-                Icons.group,
-                color: Colors.black,
-              ),
-            )),
-        Container(
-          width: calendarAppointmentDetails.bounds.width,
-          height: calendarAppointmentDetails.bounds.height / 2,
-          color: appointment.color,
-          child: Text(
-            appointment.subject +
-                DateFormat(' (hh:mm a').format(appointment.startTime) +
-                '-' +
-                DateFormat('hh:mm a)').format(appointment.endTime),
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 10),
-          ),
-        )
-      ],
-    );
-  }
-}
-
-class MeetingDataSource extends CalendarDataSource {
-  MeetingDataSource(List<Meeting> source) {
-    appointments = source;
-  }
-
-  @override
-  DateTime getStartTime(int index) {
-    return appointments![index].from;
-  }
-
-  @override
-  DateTime getEndTime(int index) {
-    return appointments![index].to;
-  }
-
-  @override
-  String getSubject(int index) {
-    return appointments![index].eventName;
-  }
-
-  @override
-  Color getColor(int index) {
-    return appointments![index].background;
-  }
-
-  @override
-  bool isAllDay(int index) {
-    return appointments![index].isAllDay;
-  }
-}
-
-class Meeting {
-  Meeting(this.eventName, this.from, this.to, this.background, this.isAllDay);
-
-  String eventName;
-  DateTime from;
-  DateTime to;
-  Color background;
-  bool isAllDay;
 }
