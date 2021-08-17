@@ -161,27 +161,151 @@ class _CalendarContentState extends State<CalendarContent> {
                       _dataSource = _getCalendarDataSource();
                     });
                   },
-                  onTap: (_) {
-                    setState(() {
-                      _openSchedule = true;
-                    });
-                  },
-                  scheduleViewSettings: ScheduleViewSettings(
-                      appointmentItemHeight: 60,
-                      weekHeaderSettings: WeekHeaderSettings(
-                        height: 40,
-                        textAlign: TextAlign.center,
-                      )),
+                  onTap: (CalendarTapDetails details) {
+                    DateTime date = details.date!;
+                    dynamic appointments = details.appointments;
+                    CalendarElement view = details.targetElement;
 
-                  monthViewSettings: MonthViewSettings(
+                    print(details.appointments);
+                    Meeting emet;
+                    emet = details.appointments!.first;
+
+                    if (details.appointments != null) {
+                      String fromDay = emet.from.toString().substring(0, 16);
+                      String toDay = emet.to.toString().substring(0, 16);
+                      showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                                content: Container(
+                                  height: 150,
+                                  width: 300,
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          IconButton(
+                                            onPressed: () {
+                                              meetings.removeWhere((element) =>
+                                                  element.eventName ==
+                                                  emet.eventName);
+                                              setState(() {
+                                                _dataSource =
+                                                    _getCalendarDataSource();
+                                              });
+                                              Navigator.pop(context);
+                                            },
+                                            icon: Icon(
+                                              Icons.delete,
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                          IconButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            icon: Icon(Icons.cancel),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Container(
+                                            height: 15,
+                                            width: 15,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: emet.background,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 20,
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                width: 250,
+                                                child: Text(
+                                                  emet.eventName,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 18),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Container(
+                                                width: 250,
+                                                child: Row(
+                                                  children: [
+                                                    Text(
+                                                      'From: ',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      maxLines: 2,
+                                                    ),
+                                                    Text(fromDay),
+                                                  ],
+                                                ),
+                                              ),
+                                              Container(
+                                                width: 250,
+                                                child: Row(
+                                                  children: [
+                                                    Text(
+                                                      'To: ',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      maxLines: 2,
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 20),
+                                                      child: Text(toDay),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ));
+                    }
+                  },
+                  // scheduleViewSettings: ScheduleViewSettings(
+                  //   appointmentItemHeight: 60,
+                  //   weekHeaderSettings: WeekHeaderSettings(
+                  //     height: 40,
+                  //     textAlign: TextAlign.center,
+                  //   ),
+                  // ),
+                  timeSlotViewSettings: TimeSlotViewSettings(
+                    minimumAppointmentDuration: Duration(minutes: 60),
+                  ),
+
+                  monthViewSettings: const MonthViewSettings(
+                      //showAgenda: true,
                       appointmentDisplayMode:
                           MonthAppointmentDisplayMode.appointment,
-                      agendaItemHeight: 50,
-                      appointmentDisplayCount: 5,
-                      showAgenda: _openSchedule,
-                      monthCellStyle: MonthCellStyle()
-                      //showTrailingAndLeadingDates: true,
-                      ),
+                      appointmentDisplayCount: 4),
 
                   selectionDecoration: BoxDecoration(
                     border: Border.all(

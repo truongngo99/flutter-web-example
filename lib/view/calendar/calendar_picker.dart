@@ -25,6 +25,7 @@ class _CalendarPickerState extends State<CalendarPicker> {
   List<Meeting> meetings = <Meeting>[];
   DateTime? fromDate;
   DateTime? toDate;
+  final _formKey = GlobalKey<FormState>();
 
   static final List<NewObject> items = <NewObject>[
     NewObject(Colors.green, 'Green'),
@@ -173,78 +174,61 @@ class _CalendarPickerState extends State<CalendarPicker> {
       content: SingleChildScrollView(
         child: Container(
           width: 500,
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left: 70),
-                child: TextField(
-                  controller: _titleController,
-                  decoration: InputDecoration(
-                      hintText: 'Add title and time',
-                      hintStyle: TextStyle(
-                        fontSize: 18,
-                      )),
-                ),
-              ),
-              ListTile(
-                leading: Icon(Icons.lock),
-                title: _buildDateTimePicker(),
-              ),
-              // ListTile(
-              //   leading: Icon(Icons.location_city),
-              //   title: TextField(
-              //     controller: _locationController,
-              //     decoration: InputDecoration(
-              //         hintText: 'Add location',
-              //         border: InputBorder.none,
-              //         hintStyle: TextStyle(
-              //           fontSize: 14,
-              //         )),
-              //   ),
-              // ),
-              // ListTile(
-              //   leading: Icon(Icons.description),
-              //   title: TextField(
-              //     decoration: InputDecoration(
-              //         hintText: 'Add description',
-              //         border: InputBorder.none,
-              //         hintStyle: TextStyle(
-              //           fontSize: 14,
-              //         )),
-              //   ),
-              // ),
-              ListTile(
-                title: DropdownButtonHideUnderline(
-                  child: DropdownButton<NewObject>(
-                    value: value,
-                    items: items
-                        .map((item) => DropdownMenuItem<NewObject>(
-                              child: Row(
-                                children: [
-                                  Container(
-                                    height: 15,
-                                    width: 15,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: item.color,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(item.textColor),
-                                ],
-                              ),
-                              value: item,
-                            ))
-                        .toList(),
-                    onChanged: (value) => setState(() {
-                      this.value = value!;
-                    }),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 70),
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value!.isEmpty) return 'Please enter title';
+                    },
+                    controller: _titleController,
+                    decoration: InputDecoration(
+                        hintText: 'Add title and time',
+                        hintStyle: TextStyle(
+                          fontSize: 18,
+                        )),
                   ),
                 ),
-              ),
-            ],
+                ListTile(
+                  leading: Icon(Icons.lock),
+                  title: _buildDateTimePicker(),
+                ),
+                ListTile(
+                  title: DropdownButtonHideUnderline(
+                    child: DropdownButton<NewObject>(
+                      value: value,
+                      items: items
+                          .map((item) => DropdownMenuItem<NewObject>(
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      height: 15,
+                                      width: 15,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: item.color,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(item.textColor),
+                                  ],
+                                ),
+                                value: item,
+                              ))
+                          .toList(),
+                      onChanged: (value) => setState(() {
+                        this.value = value!;
+                      }),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -260,11 +244,12 @@ class _CalendarPickerState extends State<CalendarPicker> {
           onPressed: () {
             // meetings.add((Meeting(_titleController.text, fromDate!, toDate!,
             //     Color(0xFF0F8644), false)));
-
-            Navigator.pop(
-                context,
-                Meeting(_titleController.text, fromDate!, toDate!, value.color,
-                    false));
+            if (_formKey.currentState!.validate()) {
+              Navigator.pop(
+                  context,
+                  Meeting(_titleController.text, fromDate!, toDate!,
+                      value.color, false));
+            }
           },
         ),
       ],
